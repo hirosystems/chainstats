@@ -93,6 +93,7 @@ export const repositoryWorker: WorkHandler<Repository> = async ({
       retryWaitTimeFor202StatusMs
     );
 
+    // todo: 1 transaction for a single repository instead of a loop of transactions
     for (const weeklyContribution of contributionStats.data) {
       // TODO: fix this so that repository lastFetchedAt is updated once after all weekly contributions are updated
       await updateWeeklyContributionTransaction(weeklyContribution, repository);

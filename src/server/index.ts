@@ -1,13 +1,13 @@
 import { logger } from '../lib/logger';
 import { init } from './init';
 import { weeklyDevsEndpoint } from './devs/weekly';
-import { monthlyCodeEndpoint } from './code/monthly';
+import { weeklyCodeEndpoint } from './code/weekly';
 import { getEcosystemsEndpoint } from './ecosystems/get';
 
 const server = init();
 try {
   weeklyDevsEndpoint(server);
-  monthlyCodeEndpoint(server);
+  weeklyCodeEndpoint(server);
   getEcosystemsEndpoint(server);
   server.listen({ port: 8080 }, (err, address) => {
     if (err) {

@@ -7,7 +7,7 @@ export const weeklyCode = async () =>
     totalCommits: Number(monthlyContribution.totalCommits),
   }));
 
-export const monthlyCodeEndpoint = (server: FastifyInstance) =>
+export const weeklyCodeEndpoint = (server: FastifyInstance) =>
   server.get('/code/weekly', async () => {
     return weeklyCode();
   });

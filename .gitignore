@@ -55,3 +55,4 @@ pids
 prisma/dbml
 
 data/
+coverage/

@@ -6,6 +6,7 @@ import { updateRepos } from './updateRepos';
 
 export const handleTomlFileJob = async (fileUrl = process.env.EC_TOML_FILE_URL) => {
   try {
+    logger.info(`Running handleTomlFile job for ${fileUrl}...`);
     if (!fileUrl) throw new Error('No toml file url provided');
     const tomlFileContent = await pullTomlFile(fileUrl);
     const {

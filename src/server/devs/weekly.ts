@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { getWeeklyContributors } from '../../queries/getMonthlyUniqueContributors';
+import { getWeeklyContributors } from '../../queries/getWeeklyContributors';
 
 export const weeklyDevs = async ({
   ecosystem,

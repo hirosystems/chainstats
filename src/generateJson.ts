@@ -1,7 +1,7 @@
 import { getEcosystems } from './server/ecosystems/get';
 import { weeklyDevs } from './server/devs/weekly';
 import * as fs from 'fs';
-import { weeklyCode } from './server/code/monthly';
+import { weeklyCode } from './server/code/weekly';
 
 const generateJson = async () => {
   const ecosystems = await getEcosystems();

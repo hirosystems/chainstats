@@ -4,6 +4,7 @@ import { repositoryWorker } from './workers/repositoriesWorker';
 import { tomlFileWorker } from './workers/tomlFileWorker';
 import { addEntitiesToQueueWorker } from './workers/addEntitiesToQueueWorker';
 import { organizationWorker } from './workers/organizationWorker';
+import { logger } from './lib/logger';
 
 dotenv.config();
 
@@ -11,7 +12,6 @@ const updateIntervalHours = Number(process.env.UPDATE_INTERVAL_HOURS) || 24;
 const jobOffsetMinutes = Number(process.env.JOB_OFFSET_MINUTES) || 30;
 
 const initialRun = async () => {
-  console.log('jobOffsetMinutes * 60', jobOffsetMinutes * 60);
   await queueManager.send(
     QUEUES.TOML_FILE,
     {},
@@ -42,16 +42,19 @@ const scheduleJobs = async () => {
 };
 
 const assignWorkers = async () => {
+  // todo: same queue for both jobs (TOML_FILE and ADD_ENTITIES_TO_QUEUE)
+  // todo: locking? less queues?
+  logger.info(`Assigning workers...`);
   await queueManager.work(QUEUES.TOML_FILE, tomlFileWorker);
   await queueManager.work(QUEUES.ADD_ENTITIES_TO_QUEUE, addEntitiesToQueueWorker);
-  // await queueManager.work(
-  //   QUEUES.ORGANIZATIONS,
-  //   {
-  //     teamSize: Number(process.env.CONCURRENT_WORKERS_COUNT),
-  //     teamConcurrency: Number(process.env.CONCURRENT_WORKERS_COUNT),
-  //   },
-  //   organizationWorker
-  // );
+  await queueManager.work(
+    QUEUES.ORGANIZATIONS,
+    {
+      teamSize: Number(process.env.CONCURRENT_WORKERS_COUNT),
+      teamConcurrency: Number(process.env.CONCURRENT_WORKERS_COUNT),
+    },
+    organizationWorker
+  );
   await queueManager.work(
     QUEUES.REPOSITORIES,
     {
