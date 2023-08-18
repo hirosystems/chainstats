@@ -1,0 +1,40 @@
+# Ecosystem Level Information
+title = "Ordinals"
+
+sub_ecosystems = []
+
+github_organizations = []
+
+# Repositories
+[[repo]]
+url = "https://github.com/satsnames/satsnamesapi"
+
+[[repo]]
+url = "https://github.com/ordimint/web-app"
+
+[[repo]]
+url = "https://github.com/Next-DAO/brc20_indexer"
+
+[[repo]]
+url = "https://github.com/unisat-wallet/extension"
+
+[[repo]]
+url = "https://github.com/hirosystems/ordhook"
+
+[[repo]]
+url = "https://github.com/orc721/rocks.starter"
+
+[[repo]]
+url = "https://github.com/orc721/orditroops.starter"
+
+[[repo]]
+url = "https://github.com/ordbase/ordbase"
+
+[[repo]]
+url = "https://github.com/hirosystems/ordinals-api"
+
+[[repo]]
+url = "https://github.com/hirosystems/ordinals-explorer"
+
+[[repo]]
+url = "https://github.com/hirosystems/chainhook"
