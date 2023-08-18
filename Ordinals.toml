@@ -38,3 +38,45 @@ url = "https://github.com/hirosystems/ordinals-explorer"
 
 [[repo]]
 url = "https://github.com/hirosystems/chainhook"
+
+[[repo]]
+url = "https://github.com/deezy-inc/deezy-place"
+
+[[repo]]
+url = "https://github.com/magicoss/msigner"
+
+[[repo]]
+url = "https://github.com/metagood/OCM-Dimensions"
+
+[[repo]]
+url = "https://github.com/UTXORD/utxord-wallet"
+
+[[repo]]
+url = "https://github.com/sadoprotocol/ordit"
+
+[[repo]]
+url = "https://github.com/mechanismHQ/metroid"
+
+[[repo]]
+url = "https://github.com/ordinals-wallet/wallet"
+
+[[repo]]
+url = "https://github.com/sadoprotocol/saline"
+
+[[repo]]
+url = "https://github.com/OrdinalSafe/ordinalsafe-extension"
+
+[[repo]]
+url = "https://github.com/ordichef/indexer"
+
+[[repo]]
+url = "https://github.com/adshao/ordinals-indexer"
+
+[[repo]]
+url = "https://github.com/tizzle/sats-names-xyz"
+
+[[repo]]
+url = "https://github.com/thaddeusdiamond/btc-dapp-js"
+
+[[repo]]
+url = "https://github.com/kvnn/OrdControl"
