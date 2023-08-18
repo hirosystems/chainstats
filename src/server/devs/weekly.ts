@@ -1,6 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import { getWeeklyContributors } from '../../queries/getMonthlyUniqueContributors';
 
+const DEFAULT_WINDOW_SIZE = 25000;
+
 export const weeklyDevs = async ({
   ecosystem,
   windowSize,
@@ -36,10 +38,43 @@ export const weeklyDevs = async ({
       weeklyContributorsRollingWindow
     )
       .map(([weekStartDateTs, contributorIds]) => ({
-        weekStartDateTs,
+        weekStartDate: new Date(Number(weekStartDateTs) * 1000).toISOString().split('T')[0],
         numberOfContributors: contributorIds.size,
       }))
-      .sort((a, b) => Number(b.weekStartDateTs) - Number(a.weekStartDateTs));
+      .sort((a, b) => new Date(b.weekStartDate).getTime() - new Date(a.weekStartDate).getTime());
+
+    // Log the total, average, and maximum number of contributors
+    const totalContributors = rollingThreeMonthWindowWeeklyContributorsArray.reduce(
+      (sum, { numberOfContributors }) => sum + numberOfContributors,
+      0
+    );
+    const averageContributorsPerWeek =
+      totalContributors / rollingThreeMonthWindowWeeklyContributorsArray.length;
+    const weekWithMostContributors = rollingThreeMonthWindowWeeklyContributorsArray.reduce(
+      (max, current) => (current.numberOfContributors > max.numberOfContributors ? current : max),
+      rollingThreeMonthWindowWeeklyContributorsArray[0]
+    );
+
+    // Create a set to store all contributor IDs
+    const allContributorIds = new Set<number>();
+
+    // Add each contributor ID to the set
+    for (const { contributorIds } of weeklyContributors) {
+      for (const contributorId of contributorIds) {
+        allContributorIds.add(contributorId);
+      }
+    }
+
+    // Calculate the total number of unique contributors
+    const totalUniqueContributors = allContributorIds.size;
+
+    console.info(`Total contributors: ${totalContributors}`);
+    console.info(`Total unique contributors: ${totalUniqueContributors}`);
+    console.info(`Average contributors per week: ${averageContributorsPerWeek}`);
+    console.info(
+      `Week with most contributors: ${weekWithMostContributors.weekStartDate} (${weekWithMostContributors.numberOfContributors} contributors)`
+    );
+
     return rollingThreeMonthWindowWeeklyContributorsArray;
   } catch (e) {
     console.error(e);
@@ -51,9 +86,12 @@ export const weeklyDevsEndpoint = (server: FastifyInstance) => {
     Params: { ecosystem: string; type?: 'full-time' | 'part-time' };
     Querystring: { windowSize?: number };
   }>('/devs/weekly/:ecosystem/:type?', async request => {
+    console.log(
+      `Fetching data for ecosystem: ${request.params.ecosystem}, windowSize: ${request.query.windowSize}, type: ${request.params.type}`
+    );
     return await weeklyDevs({
       ecosystem: request.params.ecosystem,
-      windowSize: Number(request.query.windowSize),
+      windowSize: Number(request.query.windowSize) || DEFAULT_WINDOW_SIZE,
       type: request.params.type,
     });
   });
