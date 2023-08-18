@@ -80,3 +80,6 @@ url = "https://github.com/thaddeusdiamond/btc-dapp-js"
 
 [[repo]]
 url = "https://github.com/kvnn/OrdControl"
+
+[[repo]]
+url = "https://github.com/ordinals/ord"
