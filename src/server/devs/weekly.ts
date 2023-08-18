@@ -75,6 +75,24 @@ export const weeklyDevs = async ({
       `Week with most contributors: ${weekWithMostContributors.weekStartDate} (${weekWithMostContributors.numberOfContributors} contributors)`
     );
 
+    // Reverse the array to get it in ascending order
+    const sortedContributorsArray = [...rollingThreeMonthWindowWeeklyContributorsArray].reverse();
+
+    // Calculate week-to-week growth
+    for (let i = 1; i < sortedContributorsArray.length; i++) {
+      const currentWeek = sortedContributorsArray[i];
+      const previousWeek = sortedContributorsArray[i - 1];
+      const growth =
+        ((currentWeek.numberOfContributors - previousWeek.numberOfContributors) /
+          previousWeek.numberOfContributors) *
+        100;
+      console.info(
+        `Growth from week ${previousWeek.weekStartDate} to ${
+          currentWeek.weekStartDate
+        }: ${growth.toFixed(2)}%`
+      );
+    }
+
     return rollingThreeMonthWindowWeeklyContributorsArray;
   } catch (e) {
     console.error(e);
